@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CalculateSales {
@@ -37,6 +39,28 @@ public class CalculateSales {
 		}
 
 		// ※ここから集計処理を作成してください。(処理内容2-1、2-2)
+//C:\Users\trainee1441\Desktop\売上集計課題　フォルダからすべてのファイルを取得する
+		File[] files = new File(args[0]).listFiles();
+
+		//先にファイルの情報を格納する List(ArrayList) を宣⾔します。
+		List<File> rcdFiles = new ArrayList<>();
+
+		for(int i = 0; i < files.length ; i++) {
+
+			//rcdかどうか確認する
+			//8桁かどうかを確認する
+			//一致したら(trueの場合)リストに入れる、一致しなかったら(False)何もしない（51行目に進む、if文の中に入らない）
+			if(files[i].getName().matches("^\\d{8}$.rcd")) {
+			    //リストに入れる。売上ファイルの条件に当てはまったものだけ、List(ArrayList) に追加します。
+				rcdFiles.add(files[i]);
+			}
+
+
+			//files[i].getName()
+		}
+
+
+
 
 
 
@@ -71,7 +95,7 @@ public class CalculateSales {
 				String[] items = line.split(",");
 
 				 branchNames.put(items[0], items[1]);
-				    branchSales.put(items[0], 0円);
+				    branchSales.put(items[0], 0L);
 
 			}
 
