@@ -110,7 +110,7 @@ public class CalculateSales {
 					}
 				}
 			}
-			;
+
 		}
 
 		// 支店別集計ファイル書き込み処理
@@ -196,27 +196,22 @@ public class CalculateSales {
 			//作ったファイルに今から書き込むよ！という命令をする
 			bw = new BufferedWriter(fw);
 
-
 			for (String key : branchNames.keySet()) {
 				//keyという変数には、Mapから取得したキー（＝支店コード）が代入されています。
 				//拡張for⽂で繰り返されているので、1つ⽬のキーが取得できたら、
 				//2つ⽬の取得...といったように、次々とkeyという変数に上書きされていきます。
 
-
-				//作ったファイルに文字列(key 全支店コード)を書き込む
-				  bw.write(key + "," + branchNames.get(key) + "," + branchSales.get(key));
-				  //改⾏
-			      bw.newLine();
+				//作ったファイルに文字列(支店コード key +支店名 branchNamesのvalue+ 売上 branchSalesのvalue)を書き込む
+				bw.write(key + "," + branchNames.get(key) + "," + branchSales.get(key));
+				//改⾏する
+				bw.newLine();
 
 			}
 
-
-
-
-
 		} catch (IOException e) {
 			//エラーメッセージの表示
-
+			System.out.println(UNKNOWN_ERROR);
+			return false;
 		} finally {
 			// ファイルを開いている場合
 			if (bw != null) {
@@ -234,5 +229,3 @@ public class CalculateSales {
 	}
 
 }
-
-
