@@ -68,10 +68,14 @@ public class CalculateSales {
 			int latter = Integer.parseInt(rcdFiles.get(i+1).getName().substring(0, 8));
 		      //↑⽐較する2つのファイル名の先頭から数字の8⽂字を切り出し、int型に変換しました。
 
+			//Collections.sort(rcdFiles);
+
+
 			if((latter - former) != 1) {
 				//2つのファイル名の数字を⽐較して、差が1ではなかったら、
 				//エラーメッセージをコンソールに表⽰します。
 				System.out.println("売上ファイル名が連番になっていません");
+				return;
 			}
 		}
 
@@ -112,7 +116,10 @@ public class CalculateSales {
 
 				if(saleAmount >= 10000000000L){
 					//売上⾦額が11桁以上の場合、エラーメッセージをコンソールに表⽰します。
-					//System.out.println()
+					System.out.println("合計⾦額が10桁を超えました");
+					return;
+
+
 
 				//加算した売上⾦額をMapに追加します。
 				branchSales.put(fileContents.get(0), saleAmount);
