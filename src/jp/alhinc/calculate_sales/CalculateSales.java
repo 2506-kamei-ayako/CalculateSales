@@ -55,30 +55,28 @@ public class CalculateSales {
 			if (files[i].getName().matches("^\\d{8}.rcd$")) {
 				//リストに入れる。売上ファイルの条件に当てはまったものだけ、List(ArrayList) に追加します。
 				rcdFiles.add(files[i]);
-			}//↑ここまででrcdFilesに売上ファイル(8桁のrcdファイル)を追加した
+			} //↑ここまででrcdFilesに売上ファイル(8桁のrcdファイル)を追加した
 		}
 
-		 //ここで売上ファイルが連番になっているか確認する
+		//ここで売上ファイルが連番になっているか確認する
 		//⽐較回数は売上ファイルの数よりも1回少ないため、
 		//繰り返し回数は売上ファイルのリストの数よりも1つ⼩さい数です。
 		//i-1回繰り返します
-		for(int i = 0; i < rcdFiles.size() -1; i++) {
+		for (int i = 0; i < rcdFiles.size() - 1; i++) {
 
 			int former = Integer.parseInt(rcdFiles.get(i).getName().substring(0, 8));
-			int latter = Integer.parseInt(rcdFiles.get(i+1).getName().substring(0, 8));
-		      //↑⽐較する2つのファイル名の先頭から数字の8⽂字を切り出し、int型に変換しました。
+			int latter = Integer.parseInt(rcdFiles.get(i + 1).getName().substring(0, 8));
+			//↑⽐較する2つのファイル名の先頭から数字の8⽂字を切り出し、int型に変換しました。
 
 			//Collections.sort(rcdFiles);
 
-
-			if((latter - former) != 1) {
+			if ((latter - former) != 1) {
 				//2つのファイル名の数字を⽐較して、差が1ではなかったら、
 				//エラーメッセージをコンソールに表⽰します。
 				System.out.println("売上ファイル名が連番になっていません");
 				return;
 			}
 		}
-
 
 		//rcdFilesに複数の売上ファイルの情報を格納しているので、その数だけ繰り返します。
 		for (int i = 0; i < rcdFiles.size(); i++) {
@@ -114,26 +112,17 @@ public class CalculateSales {
 				//saleAmount… branchSales（1回目は0円）と fileSale（売上）を足したもの。
 				Long saleAmount = branchSales.get(fileContents.get(0)) + fileSale;
 
-				if(saleAmount >= 10000000000L){
+				if (saleAmount >= 10000000000L) {
 					//売上⾦額が11桁以上の場合、エラーメッセージをコンソールに表⽰します。
 					System.out.println("合計⾦額が10桁を超えました");
 					return;
 
+					//加算した売上⾦額をMapに追加します。
+				}	branchSales.put(fileContents.get(0), saleAmount);
 
-
-				//加算した売上⾦額をMapに追加します。
-				branchSales.put(fileContents.get(0), saleAmount);
-
-
-
-
-				}
-			} catch (IOException e) {
+	    	} catch (IOException e) {
 				System.out.println(UNKNOWN_ERROR);
 				return;
-
-
-
 
 			} finally {
 				// ファイルを開いている場合
@@ -174,10 +163,10 @@ public class CalculateSales {
 		try {
 			//ファイルを開く
 			File file = new File(path, fileName);
-			if(!file.exists()) {
-				 System.out.println(FILE_NOT_EXIST);
-				 return false;
-			    //⽀店定義ファイルが存在しない場合、コンソールにエラーメッセージを表⽰します。
+			if (!file.exists()) {
+				System.out.println(FILE_NOT_EXIST);
+				return false;
+				//⽀店定義ファイルが存在しない場合、コンソールにエラーメッセージを表⽰します。
 			}
 			FileReader fr = new FileReader(file);
 			br = new BufferedReader(fr);
@@ -190,11 +179,11 @@ public class CalculateSales {
 				String[] items = line.split(",");
 
 				//配列（items）に２つ、または３桁の数字かどうかを判断
-				if(items.length != 2 || !items[0].matches("^\\d{3}$")){
-				    //⽀店定義ファイルの仕様が満たされていない場合、
-				    //エラーメッセージをコンソールに表⽰します。{
-						 System.out.println(UNKNOWN_ERROR);
-						 return false;
+				if (items.length != 2 || !items[0].matches("^\\d{3}$")) {
+					//⽀店定義ファイルの仕様が満たされていない場合、
+					//エラーメッセージをコンソールに表⽰します。{
+					System.out.println(UNKNOWN_ERROR);
+					return false;
 				}
 
 				//branchNamesにitemsを追加（put）している
@@ -202,7 +191,6 @@ public class CalculateSales {
 				branchSales.put(items[0], 0L);
 
 			}
-
 
 		} catch (IOException e) {
 			System.out.println(UNKNOWN_ERROR);
